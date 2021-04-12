@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Lost Timer
+		</title>
+
+		<!-- global meta -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+		<!-- lost timer js -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<!-- lost timer css -->
+		<link href="css/lost-timer.css" rel="stylesheet" type="text/css">
+
+		<style>
+			a {
+				color: #049cd8;
+				text-decoration: none;
+			}
+
+			a:hover {
+				text-decoration: underline;
+			} 
+
+			body{
+				background: #181818;
+				margin: 0;
+				padding: 0;
+				font-family: 'Helvetica', sans-serif;
+				overflow-x: hidden;
+			}
+
+			.my-timer-container {
+				width: 692px;
+				margin: 0 auto;
+				background: #272727;
+				box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.5 );
+				border-radius: 10px;
+				padding: 20px;
+				margin-top: 20px;
+				margin-bottom: 40px;
+			}
+
+			@media only screen and (max-width: 700px) {
+				.my-timer-container {
+					width: 287px;
+				}
+			}
+
+			.console-container {
+				width: calc( 100% - 40px );
+				margin: 0 auto;
+				background: #000000;
+				box-shadow: 0px 0px 10px rgba( 255, 255, 255, 0.5 );
+				border-radius: 10px;
+				margin-top: 40px;
+				height: 250px;
+				padding-left: 15px;
+				padding-right: 15px;
+				padding-top: 5px;
+				padding-bottom: 15px;
+				box-sizing: border-box;
+			}
+
+			.console-prompt {
+				font-size: 40px;
+				display: inline-block;
+				color: #43b047;
+			}
+
+			.console-input {
+				width: calc( 100% - 50px );
+				display: inline-block;
+				margin-left: 5px;
+			}
+
+			.my-console {
+				outline: none;
+				border: none;
+				box-sizing: border-box;
+				font-size: 32px;
+				background: transparent;
+				color: #43b047;
+				width: 100%;
+				font-family: inherit;
+			}
+
+			.timer-modes {
+				text-align: center;
+				margin-top: 20px;
+				font-weight: bold;
+				font-size: 12px;
+			}
+
+			.timer-mode {
+				margin-bottom: 10px;
+			}
+		</style>
+
+		<!-- lost timer object -->
+		<script src="js/lost-timer.js"></script>
+
+		<script>
+			$( function() { // doc ready
+				// get url params
+				var urlParams = new URLSearchParams( window.location.search );
+
+				var timer = new lostTimer( { // create timer
+					initialSeconds: 60 * 108, // initial seconds to begin the timer at
+					mode: urlParams.get( 'mode' ), // specify mode of dev|live
+					height: $( window ).width() > 700 ? 200 : 70, // specify the height of the timer
+					onTick: function() { // do things on each tick of the countdown
+						if ( timer.totalSeconds <= 240 && timer.totalSeconds > 0 ) { // enable numbers input and focus on input
+							$( '.my-console' ).prop( 'disabled', false );
+							$( '.my-console' ).focus();
+						} else { // disable the input
+							$( '.my-console' ).prop( 'disabled', true );
+							$( '.my-console' ).val( '' );
+						}
+					}
+				} );
+
+				$( '.my-console' ).on( 'keyup', function( e ) { // on keyup for console input
+					timer.playAudio( 'keypress' );
+
+					if ( e.keyCode == 13 && timer.theNumbersString == $( this ).val() ) { // enter key was pressed and numbers are correct
+						// clear, disable, and reset timer
+						$( '.my-console' ).val( '' );
+						$( '.my-console' ).prop( 'disabled', true );
+						timer.reset();
+					}
+				} );
+			} );
+		</script>
+	</head>
+	<body>
+		<div class="my-timer-container">
+			<div class="lost-timer">
+
+			</div>
+		</div>
+
+		<div class="console-container">
+			<div class="console-prompt">
+				>:
+			</div>
+			<div class="console-input">
+				<input type="text" class="my-console" /> 
+			</div>
+		</div>
+
+		<div class="timer-modes">
+			<div class="timer-mode">
+				<a href="?mode=dev">
+					Dev Mode
+				</a>
+			</div>
+			<div class="timer-mode">
+				<a href="?mode=live">
+					Live Mode
+				</a>
+			</div>
+		</div>
+	</body>
+</html>
