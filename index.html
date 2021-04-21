@@ -108,8 +108,11 @@
 				// get url params
 				var urlParams = new URLSearchParams( window.location.search );
 
+				// get seconds from url
+				var seconds = urlParams.get( 'seconds' ) ? urlParams.get( 'seconds' ) : 60 * 108;
+
 				var timer = new lostTimer( { // create timer
-					initialSeconds: 60 * 108, // initial seconds to begin the timer at
+					initialSeconds: parseInt( seconds ), // initial seconds to begin the timer at
 					mode: urlParams.get( 'mode' ), // specify mode of dev|live
 					height: $( window ).width() > 700 ? 200 : 70, // specify the height of the timer
 					onTick: function() { // do things on each tick of the countdown

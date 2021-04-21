@@ -101,6 +101,18 @@ var lostTimer = ( function() {
 
 					'</span>' +
 				'</div>' +
+				'<div class="' + self.containerClass + '-dev-action ' + self.containerClass + '-dev-action-set" data-seconds="6480">' + 
+					'Set Timer to 108 minutes' +
+				'</div>' +
+				'<div class="' + self.containerClass + '-dev-action ' + self.containerClass + '-dev-action-set" data-seconds="240">' + 
+					'Set Timer to 4 minutes' +
+				'</div>' +
+				'<div class="' + self.containerClass + '-dev-action ' + self.containerClass + '-dev-action-set" data-seconds="60">' + 
+					'Set Timer to 1 minute' +
+				'</div>' +
+				'<div class="' + self.containerClass + '-dev-action ' + self.containerClass + '-dev-action-set" data-seconds="10">' + 
+					'Set Timer to 10 seconds' +
+				'</div>' +
 				'<div class="' + self.containerClass + '-dev-action ' + self.containerClass + '-dev-action-sound">' + 
 					'toggle sound' +
 				'</div>' +
@@ -117,6 +129,10 @@ var lostTimer = ( function() {
 
 			$( self.containerClassCss + '-dev-action-reset' ).on( 'click', function () { // on click for timer reset
 				self.reset();
+			} );
+
+			$( self.containerClassCss + '-dev-action-set' ).on( 'click', function () { // on click for setting the initial seconds
+				window.location.href = '?mode=dev&seconds=' + $( this ).data( 'seconds' );
 			} );
 
 			$( self.containerClassCss + '-dev-action-glyphs' ).on( 'click', function () { // on click for rolling glyphs
