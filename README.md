@@ -6,6 +6,8 @@ I coded the LOST countdown timer with JavaScript, jQuery, HTML, and CSS. Every 1
 
 YouTube Tutorial: https://youtube.com/justinstolpe
 
+Live Demo: https://justinstolpe.com/lost-timer/
+
 Personal Website: https://justinstolpe.com
 
 ==========================================================================
